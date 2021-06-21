@@ -20,13 +20,14 @@ function calculateDueDate(dateAndTimeOfSubmission, turnaroundTime = 0) {
     DueDateOfResolve.setHours((workStartTime + excessTime))
   }
 
-  skipWeekend(DueDateOfResolve)
-
   return `Issue is due to be resolved by ${DueDateOfResolve.toString()}`
 }
 
 function addDaysToDate(date, days) {
-  date.setDate(date.getDate() + days)
+  for (let i = 0; i < days; i++) {
+    date.setDate(date.getDate() + 1)
+    skipWeekend(date)
+  }
 }
 
 function addHoursToTime(date, hours) {
@@ -69,8 +70,9 @@ function isDate(value) {
 
 // NAIVE TESTING
 
-submitDateTime = '2021 06 16 9:24:00'
+submitDateTime = '2021 06 18 9:24:00'
 
-for (let i = 0; i < 40; i++) {
-  console.log(calculateDueDate(submitDateTime, 3*i))
+for (let i = 0; i < 12; i++) {
+  console.log(i * 3)
+  console.log(calculateDueDate(submitDateTime, 3 * i))
 }
